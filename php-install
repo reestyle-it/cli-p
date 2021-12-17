@@ -7,15 +7,13 @@ BASEHTTPSOURCE="https://windows.php.net"
 PHPHTTPSOURCE="${BASEHTTPSOURCE}/downloads/releases"
 
 fetchversions () {
-  echo $1
-  curl -s $PHPHTTPSOURCE | grep -io '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=["'"'"']//i' -e 's/["'"'"']$//i' | grep -E 'php-[0-9]+.+-nts'| grep "x64"
+  curl -Ls "${1}" | grep -io '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=["'"'"']//i' -e 's/["'"'"']$//i' | grep -E 'php-[0-9]+.+-nts'| grep "x${BITS}"
 }
 
 showversions () {
   info "Fetching from" "${1}"
   info "Architecture" "x${BITS}"
 
-  fetchversions ${1} ${BITS}
   for line in $(fetchversions ${1})
   do
     eline "$(echo ${line} | cut -d '/' -f4 | cut -d '-' -f 2)"
@@ -23,10 +21,9 @@ showversions () {
 }
 
 getversion () {
-  fetchversions ${PHPHTTPSOURCE}
-  for line in $(fetchversions ${PHPHTTPSOURCE})
+  for line in $(fetchversions ${1})
     do
-      if [ "$(echo ${line} | cut -d '/' -f5 | cut -d '-' -f 2)" = "${1}" ]; then
+      if [ "$(echo ${line} | cut -d '/' -f4 | cut -d '-' -f 2)" = "${2}" ]; then
         echo "${line}"
         break
       fi
@@ -34,16 +31,17 @@ getversion () {
 }
 
 install () {
-  notice "Trying to install ${1}"
+  notice "Trying to install ${2}"
 
-  DLPATH=$(getversion ${1})
+  info "Architecture" "x${BITS}"
 
-  info "Found version" "${1}"
-  DLURL="https://windows.php.net${DLPATH}"
-  info "Fetch from" "${DLURL}"
+  DLPATH=$(getversion ${1} ${2})
+
+  info "Found version" "${2}"
+  DLURL="${BASEHTTPSOURCE}${DLPATH}"
+  info "Get binary from" "${DLURL}"
   info "Install to" "${PHPINSTALLDIR}"
 
-  RESULT="$(checkurl ${DLURL})"
   if [ "${RESULT}" != "NOK" ]; then
     ZIPLOC="${PHPDIR}/$(basename ${DLPATH})"
     notice "Downloading ZIP"
@@ -82,13 +80,17 @@ PHPINSTALLZIP="${PHPDIR}/${DLFILENAME}"
 
 notice "PHP version installer"
 
-if [ $# -eq 1 ]; then
+if [ $# -ge 1 ]; then
   info "You are about to install version ${VERSION}"
   read -r -p "Are you sure? [y/N] " response
 
   case "$response" in
       [yY]|[yY])
-          install ${VERSION}
+          install ${PHPHTTPSOURCE} ${VERSION}
+          ;;
+
+        *)
+          echo "OK"
           ;;
   esac
 else
