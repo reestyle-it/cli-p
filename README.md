@@ -30,6 +30,7 @@ If you want to help, just fork and go. :)
 | install.sh  | Prepares your Win-Bash environment for use                                    |
 | include.sh  | Contains globally used variables and functions                                |
 | php         | Wrapper for the PHP instance you want to run                                  |
+| clip        | Wrapper for the PHP functions like setver, install, remove, etc               |
 | php-install | Install a PHP version from PHP (will download WIN binaries, unusable for n*x) |
 | php-setver  | Sets the PHP version to be used                                               |
 | php.ver     | Contains the currently chosen PHP version                                     |
