@@ -39,19 +39,18 @@ install () {
 
   info "Found version" "${2}"
   DLURL="${BASEHTTPSOURCE}${DLPATH}"
-  info "Get binary from" "${DLURL}"
-  info "Install to" "${PHPINSTALLDIR}"
 
   if [ "${RESULT}" != "NOK" ]; then
     ZIPLOC="${PHPDIR}/$(basename ${DLPATH})"
-    notice "Downloading ZIP"
     download ${DLURL} ${ZIPLOC}
 
-    notice "Extracting zip to" "${PHPINSTALLDIR}"
+    info "Extracting zip to" "${PHPINSTALLDIR}"
     zipdeflate "${ZIPLOC}" "${PHPINSTALLDIR}"
 
-    notice "Removing zip file" "${ZIPLOC}"
+    info "Removing zip file" "${ZIPLOC}"
     rm "${ZIPLOC}"
+
+    notice "Done"
   else
     error "URL FAILED"
   fi

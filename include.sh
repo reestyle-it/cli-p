@@ -9,7 +9,7 @@ RESET="\e[0m"
 
 download () {
   # Using cURL, wget may not be available
-  notice "Downloading" "${1}"
+  info "Downloading" "${1}"
   curl -qs -L -o ${2} ${1}
 }
 

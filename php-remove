@@ -2,18 +2,33 @@
 
 source "$(dirname "$0")/include.sh";
 
+remove () {
+  info "Deleting version" $1
+  		rm -rf "${2}"
+  		if [ $? = 0 ]; then
+  		  notice "Done"
+  		else
+  		  fail "Unable to remove version"
+  		fi
+}
+
 notice "Remove PHP version"
 
 if [ $# -eq 1 ]; then
   DELPHPDIR="${PHPDIR}/php-$1"
 	if [[ -d "${DELPHPDIR}" ]]; then
-		info "Deleting version" $1
-		rm -rf "${DELPHPDIR}"
-		if [ $? = 0 ]; then
-		  notice "Done"
-		else
-		  fail "Unable to remove version"
-		fi
+	  info "You are about to remove version ${1}"
+      read -r -p "Are you sure? [y/N] " response
+
+      case "$response" in
+          [yY]|[yY])
+              remove ${1} ${DELPHPDIR}
+              ;;
+
+            *)
+              echo "OK"
+              ;;
+      esac
 	else
 		error "$1 is not a valid version"
 		newline

@@ -46,11 +46,14 @@ Architecture         x64
 ```
 $ cli-p install 8.1.1
 PHP version installer
-You are about to install version 8.1.1
+You are about to install version 7.4.27
 Are you sure? [y/N] y
-Installing version 8.1.1
-Downloading
-Extracting
+Trying to install 7.4.27
+Architecture         x64
+Found version        7.4.27
+Downloading          https://windows.php.net/downloads/releases/php-7.4.27-nts-Win32-vc15-x64.zip
+Extracting zip to    /d/Sites/bagiwi/bin/php-7.4.27
+Removing zip file    /d/Sites/bagiwi/bin/php-7.4.27-nts-Win32-vc15-x64.zip
 Done
 ```
 ```
@@ -73,7 +76,9 @@ Available versions are:
 ```
 $ cli-p remove 8.1.1
 Remove PHP version
-Deleting version     8.1.1
+You are about to remove version 7.4.27
+Are you sure? [y/N] y
+Deleting version     7.4.27
 Done
 ```
 
