@@ -2,12 +2,96 @@
 
 source "$(dirname "$0")/include.sh";
 
+HTTPOK="HTTP/1.1 200 OK"
+VERSIONS=""
+
+fetchversions () {
+  echo "$(curl -s "${1}" | grep -io '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=["'"'"']//i' -e 's/["'"'"']$//i' | grep -E "php-[0-9]+.+-nts" | grep "x${BITS}")"
+}
+
+showversions () {
+  info "Fetching from" "${PHPHTTPSOURCE}"
+  info "Architecture" "x${BITS}"
+
+  echo "$(fetchversions ${PHPHTTPSOURCE})"
+
+  for line in $(fetchversions ${PHPHTTPSOURCE})
+  do
+    eline $(echo ${line} | cut -d '/' -f5 | cut -d '-' -f 2)
+  done
+}
+
+getversion () {
+  for line in $(fetchversions ${PHPHTTPSOURCE})
+    do
+      if [ "$(echo ${line} | cut -d '/' -f5 | cut -d '-' -f 2)" = "${1}" ]; then
+        echo "${line}"
+        break
+      fi
+    done
+}
+
+install () {
+  notice "Trying to install ${1}"
+
+  DLPATH=$(getversion ${1})
+
+  info "Found version" "${1}"
+  DLURL="https://windows.php.net${DLPATH}"
+  info "Fetch from" "${DLURL}"
+  info "Install to" "${PHPINSTALLDIR}"
+
+  RESULT="$(checkurl ${DLURL})"
+  if [ "${RESULT}" != "NOK" ]; then
+    ZIPLOC="${PHPDIR}/$(basename ${DLPATH})"
+    notice "Downloading ZIP"
+    download ${DLURL} ${ZIPLOC}
+
+    notice "Extracting zip to" "${PHPINSTALLDIR}"
+    zipdeflate "${ZIPLOC}" "${PHPINSTALLDIR}"
+
+    notice "Removing zip file" "${ZIPLOC}"
+    rm "${ZIPLOC}"
+  else
+    error "URL FAILED"
+  fi
+
+}
+
+checkurl () {
+  RESULT=$(curl -Is "${1}" | head -n 1)
+
+  if [ "${RESULT}" != "${HTTPOK}" ]; then
+    echo 'NOK'
+  fi
+}
+
+fetch () {
+  # Using cURL, wget may not be available
+  notice "Downloading" "${DLURL}"
+  curl -L -o ${PHPINSTALLZIP} ${DLURL}
+}
+
 VERSION=$1
-PHPHTTPSOURCE="https://windows.php.net/download/releases"
+BASEHTTPSOURCE="https://windows.php.net/downloads"
+PHPHTTPSOURCE="${BASEHTTPSOURCE}/releases"
 
-# For now clinging to non-thread-safe, works always
-DLURL="${PHPHTTPSOURCE}/php-$VERSION.nts-Win32-vs16-x${BITS}"
+# For now clinging to NTS (non-thread-safe), works always
+PHPINSTALLDIR="${PHPDIR}/php-${VERSION}"
+PHPINSTALLZIP="${PHPDIR}/${DLFILENAME}"
 
-PHPINSTALLDIR="$PHPDIR/$1"
+notice "PHP version installer"
 
-echo "${DLURL} ${PHPINSTALLDIR}";
+if [ $# -eq 1 ]; then
+  info "You are about to install version ${VERSION}"
+  read -r -p "Are you sure? [y/N] " response
+
+  case "$response" in
+      [yY]|[yY])
+          install ${VERSION}
+          ;;
+  esac
+else
+  info "Available versions"
+  showversions
+fi

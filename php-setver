@@ -2,35 +2,20 @@
 
 source "$(dirname "$0")/include.sh";
 
-VERFILELOC="${MYDIR}/php.ver"
-CURVER=$(<$VERFILELOC)
-HIGHLIGHT="\e[0;32m"
-RESET="\e[0m"
-
-listversions () {
-	echo "Available versions are:"
-
-	for direntry in "${PHPDIR}php"/*; do
-		LISTVER=$(basename $direntry | cut -d "-" -f 2)
-
-		if [ "$LISTVER" = "$CURVER" ]; then
-			echo -e "$HIGHLIGHT$LISTVER *$RESET"
-		else
-			echo "$LISTVER"
-		fi
-	done
-}
-
-echo -ne "Currently set to $HIGHLIGHT$CURVER$RESET - "
+if [ -f "${VERFILELOC}" ]; then
+  sline "Currently set to ${HIGHLIGHT}${CURVER}${RESET} - "
+else
+  sline "Currently no PHP version set - "
+fi
 
 if [ $# -eq 1 ]; then
 
 	if [[ -d "${PHPDIR}/php-$1" ]]; then
-		echo "Setting PHP version to $1"
+		notice "Setting PHP version to" $1
 		echo "$1" > ${MYDIR}/php.ver
 	else
-		echo "$1 is not a valid version"
-		echo ""
+		error "$1 is not a valid version"
+		newline
 		listversions
 	fi
 else

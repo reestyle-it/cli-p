@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source "$(dirname "$0")/include.sh";
+
+help () {
+    notice "CLI to PHP Bagiwi aka CLIP"
+    newline
+    info "set" "Set PHP version"
+}
+
+case "$1" in
+    "set")
+        ${MYDIR}/php-setver $2
+        ;;
+
+    "install")
+        ${MYDIR}/php-install $2
+        ;;
+
+    "remove")
+        ${MYDIR}/php-remove $2
+        ;;
+
+    *)
+        help
+        ;;
+esac

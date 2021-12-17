@@ -1,0 +1,25 @@
+#!/bin/bash
+
+source "$(dirname "$0")/include.sh";
+
+notice "Remove PHP version"
+
+if [ $# -eq 1 ]; then
+  DELPHPDIR="${PHPDIR}/php-$1"
+	if [[ -d "${DELPHPDIR}" ]]; then
+		info "Deleting version" $1
+		rm -rf "${DELPHPDIR}"
+		if [ $? = 0 ]; then
+		  notice "Done"
+		else
+		  fail "Unable to remove version"
+		fi
+	else
+		error "$1 is not a valid version"
+		newline
+		listversions
+	fi
+else
+	listversions
+fi
+
