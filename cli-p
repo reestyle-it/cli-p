@@ -4,8 +4,10 @@ source "$(dirname "$0")/include.sh";
 
 help () {
     notice "CLI to PHP Bagiwi aka CLIP"
-    newline
+    eline "$(basename $0) [set|install|remove] [version]"
     info "set" "Set PHP version"
+    info "install" "Install PHP version"
+    info "remove" "Remove PHP version"
 }
 
 case "$1" in

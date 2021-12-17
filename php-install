@@ -3,25 +3,27 @@
 source "$(dirname "$0")/include.sh";
 
 HTTPOK="HTTP/1.1 200 OK"
-VERSIONS=""
+BASEHTTPSOURCE="https://windows.php.net"
+PHPHTTPSOURCE="${BASEHTTPSOURCE}/downloads/releases"
 
 fetchversions () {
-  echo "$(curl -s "${1}" | grep -io '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=["'"'"']//i' -e 's/["'"'"']$//i' | grep -E "php-[0-9]+.+-nts" | grep "x${BITS}")"
+  echo $1
+  curl -s $PHPHTTPSOURCE | grep -io '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=["'"'"']//i' -e 's/["'"'"']$//i' | grep -E 'php-[0-9]+.+-nts'| grep "x64"
 }
 
 showversions () {
-  info "Fetching from" "${PHPHTTPSOURCE}"
+  info "Fetching from" "${1}"
   info "Architecture" "x${BITS}"
 
-  echo "$(fetchversions ${PHPHTTPSOURCE})"
-
-  for line in $(fetchversions ${PHPHTTPSOURCE})
+  fetchversions ${1} ${BITS}
+  for line in $(fetchversions ${1})
   do
-    eline $(echo ${line} | cut -d '/' -f5 | cut -d '-' -f 2)
+    eline "$(echo ${line} | cut -d '/' -f4 | cut -d '-' -f 2)"
   done
 }
 
 getversion () {
+  fetchversions ${PHPHTTPSOURCE}
   for line in $(fetchversions ${PHPHTTPSOURCE})
     do
       if [ "$(echo ${line} | cut -d '/' -f5 | cut -d '-' -f 2)" = "${1}" ]; then
@@ -73,8 +75,6 @@ fetch () {
 }
 
 VERSION=$1
-BASEHTTPSOURCE="https://windows.php.net/downloads"
-PHPHTTPSOURCE="${BASEHTTPSOURCE}/releases"
 
 # For now clinging to NTS (non-thread-safe), works always
 PHPINSTALLDIR="${PHPDIR}/php-${VERSION}"
@@ -93,5 +93,5 @@ if [ $# -eq 1 ]; then
   esac
 else
   info "Available versions"
-  showversions
+  showversions ${PHPHTTPSOURCE}
 fi

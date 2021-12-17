@@ -1,6 +1,6 @@
 MYDIR=$(realpath $(dirname "$0"))
 PHPDIR="$MYDIR/bin"
-BITS=$(getconf LONG_BIT)
+BITS=$(getconf LONG_BIT | xargs)
 SUCCESS="\e[0;32m"
 FAIL="\e[0;31m"
 HIGHLIGHT="${SUCCESS}"
