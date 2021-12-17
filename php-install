@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source "$(dirname "$0")/include.sh";
+
+VERSION=$1
+PHPHTTPSOURCE="https://windows.php.net/download/releases"
+
+# For now clinging to non-thread-safe, works always
+DLURL="${PHPHTTPSOURCE}/php-$VERSION.nts-Win32-vs16-x${BITS}"
+
+PHPINSTALLDIR="$PHPDIR/$1"
+
+echo "${DLURL} ${PHPINSTALLDIR}";

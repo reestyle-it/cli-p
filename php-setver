@@ -1,0 +1,37 @@
+#!/bin/bash
+
+VERFILELOC="$HOME/bin/php.ver"
+CURVER=$(<$VERFILELOC)
+HIGHLIGHT="\e[0;32m"
+RESET="\e[0m"
+
+listversions () {
+	echo "Available versions are:"
+
+	for direntry in "/c/bin/php"/*; do
+		LISTVER=$(basename $direntry | cut -d "-" -f 2)
+
+		if [ "$LISTVER" = "$CURVER" ]; then
+			echo -e "$HIGHLIGHT$LISTVER *$RESET"
+		else
+			echo "$LISTVER"
+		fi
+	done
+}
+
+echo -ne "Currently set to $HIGHLIGHT$CURVER$RESET - "
+
+if [ $# -eq 1 ]; then
+
+	if [[ -d "/c/bin/php/php-$1" ]]; then
+		echo "Setting PHP version to $1"
+		echo "$1" > ~/bin/php.ver
+	else
+		echo "$1 is not a valid version"
+		echo ""
+		listversions
+	fi
+else
+	listversions
+fi
+
