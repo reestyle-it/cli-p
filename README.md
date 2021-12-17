@@ -18,14 +18,14 @@ This project is far from ready for the real world. I only have a few directions 
 If you want to help, just fork and go. :)
 
 # Files
-| Name        | Description                                    |
-|-------------|------------------------------------------------|
-| install.sh  | Prepares you Win-Bash environment for use |
-| include.sh  | Contains globally used variables and functions |
-| php         | Wrapper for the PHP instance you want to run |
-| php-install | Install a PHP version from PHP (downloads WIN binarys, unusable for n*x) |
-| php-setver  | Sets the PHP version to be used |
-| php.ver     | Contains the currently chosen PHP version |
+| Name        | Description                                                                   |
+|-------------|-------------------------------------------------------------------------------|
+| install.sh  | Prepares your Win-Bash environment for use                                    |
+| include.sh  | Contains globally used variables and functions                                |
+| php         | Wrapper for the PHP instance you want to run                                  |
+| php-install | Install a PHP version from PHP (will download WIN binaries, unusable for n*x) |
+| php-setver  | Sets the PHP version to be used                                               |
+| php.ver     | Contains the currently chosen PHP version                                     |
 
 # License
 ## The Unlicense
