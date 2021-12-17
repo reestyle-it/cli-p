@@ -1,3 +1,5 @@
+### UNLICENSE ###
+
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -22,3 +24,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
+
+
+### Extension to license ###
+Although keeping in mind everything the Unlicense stands for, I will not permit
+anyone to sell a copy of this package or its components, neither as-is nor edited.
