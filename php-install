@@ -14,6 +14,7 @@ showversions () {
   info "Fetching from" "${1}"
   info "Architecture" "x${BITS}"
 
+  info "Available versions:"
   for line in $(fetchversions ${1})
   do
     eline "$(echo ${line} | cut -d '/' -f4 | cut -d '-' -f 2)"
@@ -93,6 +94,5 @@ if [ $# -ge 1 ]; then
           ;;
   esac
 else
-  info "Available versions"
   showversions ${PHPHTTPSOURCE}
 fi

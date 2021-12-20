@@ -60,7 +60,7 @@ newline () {
 
 
 listversions () {
-	echo "Available versions are:"
+	echo "Installed versions:"
 
 	for direntry in "${PHPDIR}"/*; do
 		LISTVER=$(basename $direntry | cut -d "-" -f 2)
@@ -71,6 +71,20 @@ listversions () {
 			eline "$LISTVER"
 		fi
 	done
+}
+
+# $1 = needle, $2 = haystack
+inlist () {
+  for item in ${2}
+  do
+    echo $item $1
+    if [ "$item" = "${1}" ]; then
+      echo "true"
+      break
+    fi
+  done
+
+  echo "false"
 }
 
 VERFILELOC="${MYDIR}/php.ver"

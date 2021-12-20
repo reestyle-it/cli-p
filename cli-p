@@ -2,28 +2,41 @@
 
 source "$(dirname "$0")/include.sh";
 
+declare -A VALIDARGS
+VALIDARGS=(["set"]="Set PHP version" ["install"]="Install PHP version" ["remove"]="Remove PHP version")
+
+myname () {
+  notice "CLI for PHP, aka CLI-P"
+}
+
 help () {
-    notice "CLI to PHP Bagiwi aka CLIP"
-    eline "$(basename $0) [set|install|remove] [version]"
-    info "set" "Set PHP version"
-    info "install" "Install PHP version"
-    info "remove" "Remove PHP version"
+    myname
+    eline "$(basename $0) [setup|ansi|set|install|remove] [version]"
+    info "setup" "Prepare your environment"
+    info "ansi" "Show ANSI banner (for fun)"
+    for item in "${!VALIDARGS[@]}";
+    do
+      info "${item}" "${VALIDARGS[$item]}"
+    done
 }
 
 case "$1" in
-    "set")
-        ${MYDIR}/php-setver $2
+    "setup")
+        myname
+        cat cli-p.ansi
+        ${MYDIR}/php-setup ${2}
         ;;
 
-    "install")
-        ${MYDIR}/php-install $2
-        ;;
-
-    "remove")
-        ${MYDIR}/php-remove $2
+    "ansi")
+        myname
+        cat cli-p.ansi
         ;;
 
     *)
-        help
+        if [[ $([[ " ${!VALIDARGS[*]} " =~ " ${1} " ]] && echo "true" || echo "false") == "true" ]]; then
+          ${MYDIR}/php-${1} "${2}"
+        else
+          help
+        fi
         ;;
 esac

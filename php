@@ -4,11 +4,11 @@
 
 source "$(dirname "$0")/include.sh";
 
-VER=$(<~/bin/php.ver)
+VER=$(<${MYDIR}/php.ver)
 PHPVER=${VER:-7.4}
 
-echo "Using PHP version $PHPVER - to change, use php-setver [version]"
+echo "Using PHP version ${PHPVER} - to change, use php-setver [version]"
 echo ""
 
-$MYDIR/bin/php-$PHPVER/php.exe -c $MYDIR/bin/php/php-$PHPVER "$@"
+${MYDIR}/bin/php-$PHPVER/php.exe -c ${MYDIR}/bin/php-$PHPVER "$@"
 

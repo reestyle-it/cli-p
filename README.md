@@ -1,15 +1,14 @@
-# PHP Bagiwi
+# CLI-P
 
-PHP Bagiwi [bah-gi-whi _or_ /bə'gi:'wi:/] (like kiwi, but with a G). Acronym to PHP BAsh GIt WIndows, aimed at making it
-easier to use and maintain PHP versions under MingW (or other Bash-compatible systems, like CygWin).
+Acronym for "CLI for Php". 
 
-Because many developers need to work on many versions, and may occasionally want to try new versions, this set tools
+Because many developers need to work on many versions, and may occasionally want to try new versions, this tool
 should give you enough flexibility to work with the many versions.
 
 <u>**CAUTION**</u> currently this is only aimed on <u>Stable</u> builds of php, using a predefined URL, only filling in
 the PHP version of your choice and architecture (32 or 64 bit) .
 
-Only the NTS (non-thread safe or single-thread) versions (which is enough for CLI actions)
+Only the NTS (non-thread safe or single-thread) versions, which is usually enough for CLI actions.
 
 This may also work under Linux or other Unix and Linux systems, but no guarantees.
 
@@ -30,14 +29,35 @@ go.
 
 If you want to help, just fork and go. :)
 
+# Files
+
+| Name        | Description                                                                   |
+|-------------|-------------------------------------------------------------------------------|
+| install.sh  | Prepares your Win-Bash environment for use                                    |
+| include.sh  | Contains globally used variables and functions                                |
+| php         | Wrapper for the PHP instance you want to run                                  |
+| cli-p       | Wrapper for the PHP functions like setver, install, remove, etc               |
+| php-install | Install a PHP version from PHP (will download WIN binaries, unusable for n*x) |
+| php-remove  | Remove a PHP version                                                          |
+| php-set     | Sets the PHP version to be used                                               |
+| php.ver     | Contains the currently chosen PHP version                                     |
+| cli-p.ansi  | ANSI art                                                                      |
+
 # Easy to use
 Usage (also intended, may not be final):
 ```
+cli-p [ansi|set|install|remove] [version]
+ansi                 Show ANSI banner (for fun)
+set                  Set PHP version
+install              Install PHP version
+remove               Remove PHP version
+```
+```
 $ cli-p install  <-- no arguments
 PHP version installer
-Available versions
 Fetching from        https://windows.php.net/downloads/releases
 Architecture         x64
+Available versions:
 7.3.33
 7.4.27
 8.0.14
@@ -62,14 +82,14 @@ Currently no PHP version set - Setting PHP version to: 8.1.1
 ```
 ```
 $ cli-p set  <-- no arguments
-Currently set to 8.1.1 - Available versions are
+Currently set to 8.1.1 - Installed versions are:
 8.1.1 *
 7.4.27 
 ```
 ```
 $ cli-p remove  <-- no arguments
 Remove PHP version
-Available versions are:
+Installed versions are:
 8.1.1 *
 7.4.27 
 ```
@@ -81,19 +101,6 @@ Are you sure? [y/N] y
 Deleting version     7.4.27
 Done
 ```
-
-# Files
-
-| Name        | Description                                                                   |
-|-------------|-------------------------------------------------------------------------------|
-| install.sh  | Prepares your Win-Bash environment for use                                    |
-| include.sh  | Contains globally used variables and functions                                |
-| php         | Wrapper for the PHP instance you want to run                                  |
-| cli-p       | Wrapper for the PHP functions like setver, install, remove, etc               |
-| php-install | Install a PHP version from PHP (will download WIN binaries, unusable for n*x) |
-| php-remove  | Remove a PHP version                                                          |
-| php-setver  | Sets the PHP version to be used                                               |
-| php.ver     | Contains the currently chosen PHP version                                     |
 
 # License
 
