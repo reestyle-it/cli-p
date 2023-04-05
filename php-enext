@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source "$(dirname "$0")/include.sh";
+
+if [ "$1" = "shorthelp" ]; then
+  info "enext" "Enable PHP extension"
+  exit 0;
+fi
+
+fail "Not available yet"

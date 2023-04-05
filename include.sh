@@ -6,6 +6,7 @@ FAIL="\e[0;31m"
 HIGHLIGHT="${SUCCESS}"
 INFO="\e[0;33m"
 RESET="\e[0m"
+PHPVERFILE=".php-ver"
 
 download () {
   # Using cURL, wget may not be available

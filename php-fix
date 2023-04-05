@@ -3,21 +3,15 @@
 source "$(dirname "$0")/include.sh";
 
 if [ "$1" = "shorthelp" ]; then
-  info "set" "Set PHP version globally (without -f) or for the project (with -f)"
+  info "set" "Fix PHP version globally or locally"
   exit 0;
-fi
-
-if [ -f "${VERFILELOC}" ]; then
-  sline "Currently set to ${HIGHLIGHT}${CURVER}${RESET} - "
-else
-  sline "Currently no PHP version set - "
 fi
 
 if [ $# -eq 1 ]; then
 
 	if [[ -d "${PHPDIR}/php-$1" ]]; then
 		notice "Setting PHP version to" $1
-		echo "$1" > ${MYDIR}/php.ver
+		echo "$1" > ${MYDIR}/${PHPVERFILE}
 	else
 		error "$1 is not a valid version"
 		newline

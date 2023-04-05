@@ -1,0 +1,21 @@
+#!/bin/bash
+
+source "$(dirname "$0")/include.sh";
+
+if [ "$1" = "shorthelp" ]; then
+  info "edit" "Edit current php.ini"
+  exit 0;
+fi
+
+PHPVER=$(<${MYDIR}/php.ver)
+BPATH="${MYDIR}/bin/php-$PHPVER/php.ini"
+WPATH=$(cygpath -w "${BPATH}")
+
+if [ ! -f "${BPATH}" ]; then
+  info "Copy php.ini-development to php.ini"
+  cp "${BPATH::-7}/php.ini-development" ${BPATH}
+fi
+
+info "Edit file" "${BPATH}"
+info "Windows path" "${WPATH}"
+notepad "${WPATH}"

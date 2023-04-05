@@ -9,14 +9,36 @@ myname () {
   notice "CLI for PHP, aka CLI-P"
 }
 
+composehelp () {
+  myname
+  notice "Building help file";
+  HELPFILE="$(dirname $0)/help.sh"
+
+  echo "#!/bin/bash" > $HELPFILE
+  echo "source \"\$(dirname \"$0\")/include.sh\";" >> $HELPFILE
+
+  echo "eline \"$(basename $0) [setup|ansi|set|install|remove] [version]\"" >> $HELPFILE
+  echo "info \"ansi\" \"Show ANSI banner (for fun)\"" >> $HELPFILE
+
+  for file in $(ls -A $(dirname $0)/php-*);
+  do
+    eline "Adding" "${file}"
+    OUTPUT=$(${file} shorthelp | sed "s/\x1B\[[0-9;]\{1,\}[A-Za-z]//g")
+    echo "info \"$(echo ${OUTPUT::20} | xargs)\" \"${OUTPUT:21}\"" >> $HELPFILE
+  done
+}
+
 help () {
     myname
+    ${MYDIR}/help.sh
+    exit 0
     eline "$(basename $0) [setup|ansi|set|install|remove] [version]"
-    info "setup" "Prepare your environment"
     info "ansi" "Show ANSI banner (for fun)"
-    for item in "${!VALIDARGS[@]}";
+    for item in $(ls | grep "php-")
+    #"${!VALIDARGS[@]}";
     do
-      info "${item}" "${VALIDARGS[$item]}"
+      ${MYDIR}/${item} shorthelp
+#      info "${item}" "${VALIDARGS[$item]}"
     done
 }
 
@@ -32,8 +54,12 @@ case "$1" in
         cat cli-p.ansi
         ;;
 
+    "composehelp")
+        composehelp
+        ;;
+
     *)
-        if [[ $([[ " ${!VALIDARGS[*]} " =~ " ${1} " ]] && echo "true" || echo "false") == "true" ]]; then
+        if [ -f "${MYDIR}/php-${1}" ]; then
           ${MYDIR}/php-${1} "${2}"
         else
           help

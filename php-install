@@ -2,6 +2,11 @@
 
 source "$(dirname "$0")/include.sh";
 
+if [ "$1" = "shorthelp" ]; then
+  info "install" "Install PHP version"
+  exit 0;
+fi
+
 HTTPOK="HTTP/1.1 200 OK"
 BASEHTTPSOURCE="https://windows.php.net"
 PHPHTTPSOURCE="${BASEHTTPSOURCE}/downloads/releases"

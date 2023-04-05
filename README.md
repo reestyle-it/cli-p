@@ -40,7 +40,9 @@ If you want to help, just fork and go. :)
 | php-install | Install a PHP version from PHP (will download WIN binaries, unusable for n*x) |
 | php-remove  | Remove a PHP version                                                          |
 | php-set     | Sets the PHP version to be used                                               |
-| php.ver     | Contains the currently chosen PHP version                                     |
+| php-eext    | Enable PHP extension                                                          |
+| php-dext    | Disable PHP extension                                                         |
+| .php-ver    | Contains the currently chosen PHP version (global or project)                 |
 | cli-p.ansi  | ANSI art                                                                      |
 
 # Easy to use
@@ -66,14 +68,14 @@ Available versions:
 ```
 $ cli-p install 8.1.1
 PHP version installer
-You are about to install version 7.4.27
+You are about to install version 8.1.1
 Are you sure? [y/N] y
-Trying to install 7.4.27
+Trying to install 8.1.1
 Architecture         x64
-Found version        7.4.27
-Downloading          https://windows.php.net/downloads/releases/php-7.4.27-nts-Win32-vc15-x64.zip
-Extracting zip to    /d/Sites/bagiwi/bin/php-7.4.27
-Removing zip file    /d/Sites/bagiwi/bin/php-7.4.27-nts-Win32-vc15-x64.zip
+Found version        8.1.1
+Downloading          https://windows.php.net/downloads/releases/php-8.1.17-nts-Win32-vc15-x64.zip
+Extracting zip to    /d/Sites/bagiwi/bin/php-8.1.1
+Removing zip file    /d/Sites/bagiwi/bin/php-8.1.1-nts-Win32-vc15-x64.zip
 Done
 ```
 ```
@@ -96,9 +98,9 @@ Installed versions are:
 ```
 $ cli-p remove 8.1.1
 Remove PHP version
-You are about to remove version 7.4.27
+You are about to remove version 8.1.1
 Are you sure? [y/N] y
-Deleting version     7.4.27
+Deleting version     8.1.1
 Done
 ```
 
@@ -108,7 +110,7 @@ Done
 
 I UNLICENSED this project. Feel free to extend, expand, contribute.
 
-## Extension to license
+## Extension to Unlicense
 
-Although keeping in mind everything the Unlicense stands for, I will not permit anyone to sell a copy of this package or
-its components, neither as-is nor edited.
+Although keeping in mind everything the Unlicense stands for, I will not permit anyone to ___sell___ a copy of this package or
+its components, neither as-is nor edited. It's free and should remain free.

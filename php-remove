@@ -2,6 +2,11 @@
 
 source "$(dirname "$0")/include.sh";
 
+if [ "$1" = "shorthelp" ]; then
+  info "remove" "Remove PHP version"
+  exit 0;
+fi
+
 remove () {
   info "Deleting version" $1
   		rm -rf "${2}"

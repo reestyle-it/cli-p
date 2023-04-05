@@ -2,6 +2,11 @@
 
 source "$(dirname "$0")/include.sh";
 
+if [ "$1" = "shorthelp" ]; then
+  info "setup" "Setup your your environment"
+  exit 0;
+fi
+
 VCDL="https://aka.ms/vs/16/release/VC_redist.x${BITS}.exe"
 
 echo "Check if you have the right Visual C++ installed:"
